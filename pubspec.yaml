@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   mobile_scanner: ^3.2.0
+  plugin_wifi_connect: ^1.0.2
 
 dev_dependencies:
   flutter_test:
