@@ -12,9 +12,10 @@ class ModuleConfigForm extends StatefulWidget {
 
 class _ModuleConfigFormState extends State<ModuleConfigForm> {
   final _formKey = GlobalKey<FormState>();
-  final _ssidController = TextEditingController();
-  final _passwordController = TextEditingController();
-  Set<int> _enabledPorts = {};
+  final _ssidController = TextEditingController(text: "wifissid");
+  final _passwordController = TextEditingController(text: "wifipassword");
+  final _serverController = TextEditingController(text: "192.168.1.30:7000");
+  final Set<int> _enabledPorts = {1, 4, 6, 8};
 
   bool _isEnabled(int port) {
     return _enabledPorts.contains(port);
@@ -50,6 +51,12 @@ class _ModuleConfigFormState extends State<ModuleConfigForm> {
               icon: const Icon(Icons.wifi_password),
               hint: "Heslo WiFi sítě",
               controller: _passwordController,
+              validationRules: ["required"],
+            ),
+            FormComponents.renderTextInput(
+              icon: const Icon(Icons.computer),
+              hint: "IP adresa serveru",
+              controller: _serverController,
               validationRules: ["required"],
             ),
             Text(
@@ -94,9 +101,11 @@ class _ModuleConfigFormState extends State<ModuleConfigForm> {
                 }
 
                 widget.onSubmit({
-                  "wifi_ssid": _ssidController.text,
-                  "wifi_password": _passwordController.text,
-                  "enabledPorts": _enabledPorts.toList(),
+                  "ssid": _ssidController.text,
+                  "password": _passwordController.text,
+                  "serverIp": _serverController.text.split(":")[0],
+                  "serverPort": _serverController.text.split(":")[1],
+                  "ports": _enabledPorts.toList(),
                 });
               },
               child: const Text("Naprogramovat"),

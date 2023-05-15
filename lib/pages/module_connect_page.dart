@@ -11,12 +11,11 @@ class ModuleConnectPage extends StatefulWidget {
 class _ModuleConnectPageState extends State<ModuleConnectPage> {
   @override
   Widget build(BuildContext context) {
-    print(widget.productCode);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Připojení k modulu"),
       ),
-      body: const Placeholder(),
+      body: Text(widget.productCode),
     );
   }
 }

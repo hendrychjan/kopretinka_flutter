@@ -7,7 +7,7 @@
   <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
 
    <application
-        android:label="kopretinka_flutter"
+        android:label="Kopretinka"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

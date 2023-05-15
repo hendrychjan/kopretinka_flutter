@@ -17,7 +17,7 @@ class _ModuleConfigPageState extends State<ModuleConfigPage> {
 
   Future<void> _connectToModule() async {
     try {
-      await ModuleControlService.connectToModuleWifi(widget.configQR);
+      await ModuleControlService.connectToModuleWifi();
     } catch (e) {
       Get.off(
         () =>
@@ -36,16 +36,17 @@ class _ModuleConfigPageState extends State<ModuleConfigPage> {
       _state = ModuleConfigState.programming;
     });
 
-    try {
-      await ModuleControlService.uploadConfiguration(
-          widget.configQR, moduleConfig);
-    } catch (e) {
-      Get.off(
-        () =>
-            const WelcomePage(errorMessage: "Nepodařilo se nahrát konfiguraci"),
-      );
-      return;
-    }
+    await ModuleControlService.uploadConfiguration(moduleConfig);
+    // try {
+    //   await ModuleControlService.uploadConfiguration(
+    //       widget.configQR, moduleConfig);
+    // } catch (e) {
+    //   Get.off(
+    //     () =>
+    //         const WelcomePage(errorMessage: "Nepodařilo se nahrát konfiguraci"),
+    //   );
+    //   rethrow;
+    // }
 
     Get.offAll(() => const WelcomePage(successMessage: "Konfigurace nahrána"));
   }
@@ -54,6 +55,15 @@ class _ModuleConfigPageState extends State<ModuleConfigPage> {
   void initState() {
     super.initState();
     _state = ModuleConfigState.connecting;
+
+    if (!ModuleControlService.parseConfigQR(widget.configQR)) {
+      Future.delayed(Duration.zero, () {
+        Get.offAll(
+          () => const WelcomePage(errorMessage: "QR kód je neplatný"),
+        );
+      });
+      return;
+    }
 
     Future.delayed(Duration.zero, _connectToModule);
   }
