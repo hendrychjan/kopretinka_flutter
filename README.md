@@ -1,3 +1,3 @@
-# Kopretinka - app
+# Kopretinka - flutter
 
-Mobilní aplikace pro zavlažovací systém Kopretinka.
+Kopretinka mobile app
